@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, SafeAreaView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { getComments } from '@/services/api';
 import { Post, Comment } from '@/types';

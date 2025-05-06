@@ -11,6 +11,7 @@ import ProfileScreen from '@/screens/ProfileScreen';
 import AlbumPhotosScreen from '@/screens/AlbumPhotosScreen';
 import SinglePhotoScreen from '@/screens/SinglePhotoScreen';
 import AlbumsScreen from '@/screens/AlbumsScreen';
+import ToDosScreen from '@/screens/ToDosScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -81,6 +82,20 @@ const TabNavigator = () => {
           },
           title: 'Posts',
           tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="ToDos"
+        component={ToDosScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.cardBackground,
+          },
+          title: 'ToDos',
+          tabBarIcon: ({ color, size }) => <Ionicons name="checkmark-done" size={size} color={color} />,
         }}
       />
       <Tab.Screen

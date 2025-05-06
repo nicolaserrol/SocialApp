@@ -1,5 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import postsSlice from './postsSlice';
+import todoSlice from './todoSlice';
 
 export const rootReducer = combineReducers({
-  // Add your reducers here
+  posts: postsSlice,
+  todos: todoSlice,
 });

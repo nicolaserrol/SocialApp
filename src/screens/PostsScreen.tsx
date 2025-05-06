@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, FlatList, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { View, FlatList, StyleSheet, ActivityIndicator, Text, SafeAreaView } from 'react-native';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPosts } from '@/store/slices/postsSlice';
 import PostItem from '@/components/PostItem';
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    padding: theme.spacing.md,
   },
   centered: {
     flex: 1,

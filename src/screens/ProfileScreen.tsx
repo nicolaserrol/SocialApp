@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import { theme } from '@/theme';
 

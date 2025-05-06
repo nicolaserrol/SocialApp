@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Post } from '@/types';
 import Card from '@/components/Card';
+import { theme } from '@/theme';
 
 interface PostItemProps {
   item: Post;
@@ -21,8 +22,8 @@ const PostItem: React.FC<PostItemProps> = ({ item, onPress }) => {
 
 const styles = StyleSheet.create({
   postContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingTop: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
   },
   title: {
     fontSize: 18,

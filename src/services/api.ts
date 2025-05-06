@@ -1,14 +1,13 @@
 import axios from 'axios';
-import Config from 'react-native-config';
-import { Post, Comment, Album, Photo } from '@/types';
+import { Post, Comment, Album, Photo, Todo } from '@/types';
 
 const api = axios.create({
-  baseURL: Config.API_BASE_URL,
+  baseURL: 'https://jsonplaceholder.typicode.com',
 });
 
 // Add request interceptor
 api.interceptors.request.use((config) => {
-  console.log('API Base URL:', Config.API_BASE_URL);
+  console.log('API Base URL:', config.baseURL);
   return config;
 }, (error) => {
   console.error('Request error:', error);
@@ -23,6 +22,31 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Todo API functions
+export const getTodos = async (): Promise<Todo[]> => {
+  const response = await api.get<Todo[]>('/todos');
+  return response.data;
+};
+
+export const getTodo = async (todoId: number): Promise<Todo> => {
+  const response = await api.get<Todo>(`/todos/${todoId}`);
+  return response.data;
+};
+
+export const createTodo = async (todo: Partial<Todo>): Promise<Todo> => {
+  const response = await api.post<Todo>('/todos', todo);
+  return response.data;
+};
+
+export const updateTodo = async (todoId: number, todo: Partial<Todo>): Promise<Todo> => {
+  const response = await api.put<Todo>(`/todos/${todoId}`, todo);
+  return response.data;
+};
+
+export const deleteTodo = async (todoId: number): Promise<void> => {
+  await api.delete(`/todos/${todoId}`);
+};
 
 export const getPosts = async (): Promise<Post[]> => {
   const response = await api.get<Post[]>('/posts');

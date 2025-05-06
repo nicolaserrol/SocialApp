@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { Post } from '@/types';
 
 const ProfileScreen = () => {
   const profileData = {

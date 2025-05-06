@@ -1,12 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Post } from '@/types';
 import Card from '@/components/Card';
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-}
 
 interface PostItemProps {
   item: Post;

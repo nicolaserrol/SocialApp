@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIn
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getPosts, getAlbums, getPhotos } from '@/services/api';
-import { Post, Photo, Album } from '@/types';
+
 import { RootStackParamList } from '@/navigation/types';
+import { Post, Photo, Album } from '@/types';
 import AlbumCollage from '@/components/AlbumCollage';
 
 const HomeScreen: React.FC = () => {

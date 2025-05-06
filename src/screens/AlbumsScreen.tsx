@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, 
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getAlbums, getPhotos } from '@/services/api';
+import { theme } from '@/theme';
 
 import { RootStackParamList } from '@/navigation/types';
 import { Photo, Album } from '@/types';
@@ -62,16 +63,16 @@ const AlbumsScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    padding: 8,
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.sm,
   },
   albumCard: {
     flex: 1,
-    margin: 4,
-    backgroundColor: '#fff',
-    borderRadius: 8,
+    margin: theme.spacing.sm,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: theme.colors.secondary,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -82,13 +83,13 @@ const styles = StyleSheet.create({
   albumImage: {
     width: '100%',
     height: 150,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderTopLeftRadius: theme.borderRadius.medium,
+    borderTopRightRadius: theme.borderRadius.medium,
   },
   albumTitle: {
-    padding: 8,
-    fontSize: 14,
-    color: '#333',
+    padding: theme.spacing.sm,
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textPrimary,
   },
 });
 

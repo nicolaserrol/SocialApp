@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIn
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getPosts, getAlbums, getPhotos } from '@/services/api';
+import { theme } from '@/theme';
 
 import { RootStackParamList } from '@/navigation/types';
 import { Post, Photo, Album } from '@/types';
@@ -106,27 +107,27 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.colors.background,
   },
   section: {
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginVertical: 8,
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
+    marginVertical: theme.spacing.sm,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 16,
+    fontSize: theme.typography.fontSize.xl,
+    fontWeight: 'bold' as const,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.md,
   },
   postCard: {
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 16,
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
+    marginBottom: theme.spacing.md,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: theme.colors.secondary,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -135,21 +136,21 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   postTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    fontSize: theme.typography.fontSize.md,
+    fontWeight: 'bold' as const,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.md,
   },
   postBody: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
   },
   photoCard: {
-    margin: 8,
-    backgroundColor: '#fff',
-    borderRadius: 8,
+    margin: theme.spacing.sm,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: theme.colors.secondary,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -161,12 +162,12 @@ const styles = StyleSheet.create({
   photo: {
     width: 150,
     height: 150,
-    borderRadius: 8,
+    borderRadius: theme.borderRadius.medium,
   },
   photoTitle: {
-    padding: 8,
-    fontSize: 12,
-    color: '#333',
+    padding: theme.spacing.sm,
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textPrimary,
   },
   albumsList: {
     flexDirection: 'row',

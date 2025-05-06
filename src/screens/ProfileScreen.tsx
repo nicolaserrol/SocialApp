@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Post } from '@/types';
+import { theme } from '@/theme';
 
 const ProfileScreen = () => {
   const profileData = {
@@ -74,66 +74,69 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.colors.background,
   },
   header: {
-    padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.cardBackground,
+    padding: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 15,
+    borderBottomColor: theme.colors.border,
   },
   headerContent: {
     alignItems: 'center',
   },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: theme.spacing.md,
+  },
   name: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: theme.typography.fontSize.xxl,
+    fontWeight: 'bold' as const,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
   },
   username: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 5,
+    fontSize: theme.typography.fontSize.md,
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing.sm,
   },
   bio: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 5,
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
     textAlign: 'center',
-    maxWidth: 250,
+    marginBottom: theme.spacing.md,
   },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 20,
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.cardBackground,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.border,
   },
   statItem: {
     alignItems: 'center',
   },
   statNumber: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: theme.typography.fontSize.lg,
+    fontWeight: 'bold' as const,
+    color: theme.colors.textPrimary,
   },
   statLabel: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
   },
   postsContainer: {
-    padding: 15,
-    backgroundColor: '#f5f5f5',
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.cardBackground,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 15,
+    fontSize: theme.typography.fontSize.xxl,
+    fontWeight: 'bold' as const,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.md,
   },
   postsGrid: {
     flexDirection: 'row',

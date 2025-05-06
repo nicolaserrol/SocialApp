@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/navigation/types';
 import { Post } from '@/types';
+import { theme } from '@/theme';
 
 const PostsScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ const PostsScreen: React.FC = () => {
         onRefresh={onRefresh}
         ListEmptyComponent={
           loading ? (
-            <ActivityIndicator size="large" color="#007AFF" />
+            <ActivityIndicator size="large" color={theme.colors.primary} />
           ) : (
             <Text style={styles.emptyText}>No posts found</Text>
           )
@@ -51,7 +52,8 @@ const PostsScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.md,
   },
   centered: {
     flex: 1,

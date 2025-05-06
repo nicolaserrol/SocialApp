@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Album, Photo } from '@/types';
 import { RootStackParamList } from '@/navigation/types';
 import { getPhotos } from '@/services/api';
+import { theme } from '@/theme';
 
 const getRandomImage = () => {
   return `https://picsum.photos/300/300?random`;
@@ -53,7 +54,7 @@ const AlbumCollage: React.FC<AlbumCollageProps> = ({ album }) => {
       <Text style={styles.title}>{album.title}</Text>
       <View style={styles.collageContainer}>
         {loading ? (
-          <ActivityIndicator size="small" color="#0000ff" />
+          <ActivityIndicator size="small" color={theme.colors.secondary} />
         ) : (
           <FlatList
             data={photos}
@@ -73,48 +74,47 @@ const AlbumCollage: React.FC<AlbumCollageProps> = ({ album }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    margin: 8,
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
+    margin: theme.spacing.sm,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: theme.colors.secondary,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    height: 300,
     width: 300,
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 12,
-    color: '#333',
+    fontSize: theme.typography.fontSize.md,
+    fontWeight: 'bold' as const,
+    marginBottom: theme.spacing.md,
+    color: theme.colors.textPrimary,
   },
   collageContainer: {
     flex: 1,
   },
   collageContent: {
-    paddingBottom: 16,
+    paddingBottom: theme.spacing.md,
   },
   thumbnailContainer: {
     flex: 1,
-    margin: 4,
+    margin: theme.spacing.sm,
   },
   thumbnail: {
     flex: 1,
     aspectRatio: 1,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+    backgroundColor: theme.colors.background,
+    borderRadius: theme.borderRadius.medium,
     justifyContent: 'center',
     alignItems: 'center',
   },
   thumbnailText: {
-    color: '#666',
-    fontSize: 12,
+    color: theme.colors.textSecondary,
+    fontSize: theme.typography.fontSize.sm,
   },
 });
 

@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { theme } from '@/theme';
 import HomeScreen from '@/screens/HomeScreen';
 import PostsScreen from '@/screens/PostsScreen';
 import PostDetailScreen from '@/screens/PostDetailScreen';
@@ -20,12 +21,9 @@ export const AppNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#007AFF',
+            backgroundColor: theme.colors.primary,
           },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+          headerTintColor: theme.colors.cardBackground,
         }}
       >
         <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
@@ -53,14 +51,20 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#f4511e',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.textSecondary,
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.cardBackground,
+          },
           title: 'Home',
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
@@ -69,6 +73,12 @@ const TabNavigator = () => {
         name="Posts"
         component={PostsScreen}
         options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.cardBackground,
+          },
           title: 'Posts',
           tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
         }}
@@ -77,6 +87,12 @@ const TabNavigator = () => {
         name="Albums"
         component={AlbumsScreen}
         options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.cardBackground,
+          },
           title: 'Albums',
           tabBarIcon: ({ color, size }) => <Ionicons name="albums" size={size} color={color} />,
         }}
@@ -85,6 +101,12 @@ const TabNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.cardBackground,
+          },
           title: 'Profile',
           tabBarIcon: ({ color, size }) => <Ionicons name="person" size={size} color={color} />,
         }}

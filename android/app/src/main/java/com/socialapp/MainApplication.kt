@@ -1,4 +1,4 @@
-package com.rnstarterapp
+package com.socialapp
 
 import android.app.Application
 import com.facebook.react.PackageList

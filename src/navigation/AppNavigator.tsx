@@ -9,6 +9,7 @@ import PostDetailScreen from '@/screens/PostDetailScreen';
 import ProfileScreen from '@/screens/ProfileScreen';
 import AlbumPhotosScreen from '@/screens/AlbumPhotosScreen';
 import SinglePhotoScreen from '@/screens/SinglePhotoScreen';
+import AlbumsScreen from '@/screens/AlbumsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -70,6 +71,14 @@ const TabNavigator = () => {
         options={{
           title: 'Posts',
           tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="Albums"
+        component={AlbumsScreen}
+        options={{
+          title: 'Albums',
+          tabBarIcon: ({ color, size }) => <Ionicons name="albums" size={size} color={color} />,
         }}
       />
       <Tab.Screen

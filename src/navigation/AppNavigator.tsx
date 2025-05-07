@@ -27,7 +27,7 @@ export const AppNavigator = () => {
           headerTintColor: theme.colors.cardBackground,
         }}
       >
-        <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
         <Stack.Screen
           name="PostDetail"
           component={PostDetailScreen}
@@ -71,20 +71,6 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Posts"
-        component={PostsScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: theme.colors.primary,
-          },
-          headerTitleStyle: {
-            color: theme.colors.cardBackground,
-          },
-          title: 'Posts',
-          tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
-        }}
-      />
-      <Tab.Screen
         name="ToDos"
         component={ToDosScreen}
         options={{
@@ -96,6 +82,20 @@ const TabNavigator = () => {
           },
           title: 'ToDos',
           tabBarIcon: ({ color, size }) => <Ionicons name="checkmark-done" size={size} color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="Posts"
+        component={PostsScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: theme.colors.cardBackground,
+          },
+          title: 'Posts',
+          tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
         }}
       />
       <Tab.Screen

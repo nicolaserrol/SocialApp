@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   RefreshControl,
+  TextInput,
 } from 'react-native';
 import { theme } from '@/theme';
 import Ionicons from '@react-native-vector-icons/ionicons';
@@ -20,6 +21,15 @@ const ToDosScreen: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showCompleted, setShowCompleted] = useState(true);
+  const [showActive, setShowActive] = useState(true);
+
+  const filteredTodos = todos.filter(todo => {
+    const matchesSearch = todo.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = (todo.completed && showCompleted) || (!todo.completed && showActive);
+    return matchesSearch && matchesStatus;
+  });
 
   const fetchTodosData = async () => {
     setLoading(true);
@@ -38,13 +48,18 @@ const ToDosScreen: React.FC = () => {
     fetchTodosData();
   }, []);
 
-
   const toggleTodo = (id: number) => {
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
+  };
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setShowCompleted(true);
+    setShowActive(true);
   };
 
   const renderTodo = ({ item }: { item: Todo }) => {
@@ -76,15 +91,6 @@ const ToDosScreen: React.FC = () => {
     );
   }
 
-
-  if (loading) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </SafeAreaView>
-    );
-  }
-
   if (error) {
     return (
       <SafeAreaView style={styles.container}>
@@ -94,9 +100,60 @@ const ToDosScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search todos..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholderTextColor={theme.colors.textSecondary}
+        />
+      </View>
+
+      <View style={styles.filterContainer}>
+        <View style={styles.filterButtonsContainer}>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              showCompleted && styles.filterButtonActive,
+            ]}
+            onPress={() => setShowCompleted(!showCompleted)}
+          >
+            <Text style={[
+            styles.filterButtonText,
+            showCompleted && styles.filterButtonTextActive
+          ]}>Completed</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.filterButton,
+              showActive && styles.filterButtonActive,
+            ]}
+            onPress={() => setShowActive(!showActive)}
+          >
+            <Text style={[
+            styles.filterButtonText,
+            showActive && styles.filterButtonTextActive
+          ]}>Active</Text>
+          </TouchableOpacity>
+        </View>
+        {searchQuery || !showCompleted || !showActive ? (
+          <TouchableOpacity
+            style={styles.clearFiltersButton}
+            onPress={handleClearFilters}
+          >
+            <Ionicons
+              name="trash-outline"
+              size={20}
+              color={theme.colors.primary}
+            />
+          </TouchableOpacity>
+        ) : null}
+      </View>
+
       <FlatList
-        data={todos}
+        data={filteredTodos}
         renderItem={renderTodo}
         keyExtractor={(item) => item.id.toString()}
         refreshControl={
@@ -105,8 +162,9 @@ const ToDosScreen: React.FC = () => {
             onRefresh={fetchTodosData}
           />
         }
+        contentContainerStyle={styles.listContainer}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -114,6 +172,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
+  },
+  searchContainer: {
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.background,
+  },
+  searchInput: {
+    height: 40,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
+    paddingHorizontal: theme.spacing.md,
+    color: theme.colors.textPrimary,
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: theme.spacing.md,
+    paddingBottom: theme.spacing.sm,
+    backgroundColor: theme.colors.background,
+  },
+  filterButtonsContainer: {
+    flexDirection: 'row',
+  },
+  filterButton: {
+    backgroundColor: theme.colors.cardBackground,
+    padding: theme.spacing.sm,
+    borderRadius: theme.borderRadius.large,
+    marginRight: theme.spacing.sm,
+    ...theme.shadows.small,
+  },
+  filterButtonActive: {
+    backgroundColor: theme.colors.primary,
+  },
+  filterButtonText: {
+    color: theme.colors.textPrimary,
+  },
+  filterButtonTextActive: {
+    color: theme.colors.background,
+  },
+  clearFiltersButton: {
+    backgroundColor: theme.colors.cardBackground,
+    padding: theme.spacing.sm,
+    borderRadius: theme.borderRadius.medium,
+  },
+  listContainer: {
+    flexGrow: 1,
   },
   todoContent: {
     flexDirection: 'row',
@@ -134,10 +238,6 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
     flex: 1,
     marginRight: theme.spacing.sm,
-  },
-  todoStatus: {
-    fontSize: theme.typography.fontSize.sm,
-    color: theme.colors.textSecondary,
   },
 });
 

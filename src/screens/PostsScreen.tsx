@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, FlatList, StyleSheet, ActivityIndicator, Text, SafeAreaView } from 'react-native';
+import { View, FlatList, StyleSheet, ActivityIndicator, Text, SafeAreaView, TextInput } from 'react-native';
+import _ from 'lodash';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPosts } from '@/store/slices/postsSlice';
 import PostItem from '@/components/PostItem';
@@ -13,7 +14,18 @@ const PostsScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const { posts, loading, error } = useAppSelector((state) => state.posts);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  // Debounce the search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -25,14 +37,30 @@ const PostsScreen: React.FC = () => {
     setRefreshing(false);
   }, [dispatch]);
 
+  const filteredPosts = posts.filter((post: Post) => {
+    const matchesSearch = post.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+                         post.body.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
+    return matchesSearch;
+  });
+
   const renderItem = ({ item }: { item: Post }) => (
     <PostItem item={item} onPress={() => navigation.navigate('PostDetail', { post: item })} />
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search posts..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholderTextColor={theme.colors.textSecondary}
+        />
+      </View>
+
       <FlatList
-        data={posts}
+        data={filteredPosts}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         refreshing={refreshing}
@@ -40,12 +68,12 @@ const PostsScreen: React.FC = () => {
         ListEmptyComponent={
           loading ? (
             <ActivityIndicator size="large" color={theme.colors.primary} />
-          ) : (
+          ) : filteredPosts.length === 0 ? (
             <Text style={styles.emptyText}>No posts found</Text>
-          )
+          ) : null
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -54,17 +82,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
   },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  searchContainer: {
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.background,
   },
-  flatList: {
-    backgroundColor: 'white',
-  },
-  error: {
-    color: 'red',
-    fontSize: 16,
+  searchInput: {
+    height: 40,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
+    paddingHorizontal: theme.spacing.md,
+    color: theme.colors.textPrimary,
   },
   emptyText: {
     fontSize: 16,

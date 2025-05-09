@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, FlatList, StyleSheet, ActivityIndicator, Text, SafeAreaView, TextInput } from 'react-native';
-import _ from 'lodash';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPosts } from '@/store/slices/postsSlice';
 import PostItem from '@/components/PostItem';
@@ -15,17 +14,7 @@ const PostsScreen: React.FC = () => {
   const { posts, loading, error } = useAppSelector((state) => state.posts);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  // Debounce the search query
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -38,8 +27,8 @@ const PostsScreen: React.FC = () => {
   }, [dispatch]);
 
   const filteredPosts = posts.filter((post: Post) => {
-    const matchesSearch = post.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
-                         post.body.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
+    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         post.body.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;
   });
 

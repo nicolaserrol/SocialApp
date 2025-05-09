@@ -8,17 +8,20 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import { theme } from '@/theme';
+import { User } from '@/types';
 
 const ProfileScreen = () => {
+  const user = useSelector((state: { user: User }) => state.user);
   const profileData = {
-    name: 'John Doe',
-    username: '@johndoe',
-    bio: 'Software Developer | Tech Enthusiast | Building amazing things',
+    name: user.name,
+    username: `@${user.username}`,
+    bio: user.company.catchPhrase,
     stats: {
-      posts: 123,
-      followers: 2456,
-      following: 789,
+      posts: 0,
+      followers: 0,
+      following: 0,
     },
     profilePicture: 'https://picsum.photos/150/150?random',
   };

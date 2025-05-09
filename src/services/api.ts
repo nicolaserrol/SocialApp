@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Post, Comment, Album, Photo, Todo } from '@/types';
+import Config from 'react-native-config';
 
 const api = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  baseURL: Config.API_BASE_URL,
 });
 
 // Add request interceptor

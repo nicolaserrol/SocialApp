@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 import { getPosts, getAlbums, getPhotos } from '@/services/api';
 import { theme } from '@/theme';
 
@@ -11,6 +12,7 @@ import AlbumCollage from '@/components/AlbumCollage';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const user = useSelector((state: any) => state.user);
   const [posts, setPosts] = useState<Post[]>([]);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -53,6 +55,14 @@ const HomeScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>
+          Welcome back, {user?.name}!
+        </Text>
+        <Text style={styles.welcomeSubtitle}>
+          {user?.company.name} - {user?.address.city}
+        </Text>
+      </View>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Latest Posts</Text>
         {posts.map((post) => (
@@ -108,6 +118,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
+  },
+  welcomeContainer: {
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.cardBackground,
+    borderRadius: theme.borderRadius.medium,
+    marginVertical: theme.spacing.sm,
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: theme.typography.fontSize.xl,
+    fontWeight: 'bold' as const,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
+  },
+  welcomeSubtitle: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
   },
   section: {
     padding: theme.spacing.md,

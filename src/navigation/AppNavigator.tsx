@@ -57,7 +57,7 @@ const TabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Dashboard"
         component={HomeScreen}
         options={{
           headerStyle: {
@@ -66,7 +66,7 @@ const TabNavigator = () => {
           headerTitleStyle: {
             color: theme.colors.cardBackground,
           },
-          title: 'Home',
+          title: 'Dashboard',
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />

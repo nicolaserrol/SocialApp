@@ -10,7 +10,6 @@ import {
   RefreshControl,
   TextInput,
 } from 'react-native';
-import _ from 'lodash';
 import { theme } from '@/theme';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Card from '@/components/Card';
@@ -23,21 +22,11 @@ const ToDosScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [showCompleted, setShowCompleted] = useState(true);
   const [showActive, setShowActive] = useState(true);
 
-  // Debounce the search query
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
   const filteredTodos = todos.filter(todo => {
-    const matchesSearch = todo.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
+    const matchesSearch = todo.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = (todo.completed && showCompleted) || (!todo.completed && showActive);
     return matchesSearch && matchesStatus;
   });
